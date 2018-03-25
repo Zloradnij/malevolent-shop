@@ -1,0 +1,20 @@
+#php_value date.timezone Asia/Novosibirsk
+
+php_value upload_max_filesize 15M
+php_value post_max_size 25M
+php_value max_execution_time 100
+php_value max_input_time 100
+
+RewriteCond %{HTTP_HOST} .
+RewriteCond %{HTTP_HOST} !^shop\.zloradnij\.gpm [NC]
+RewriteRule (.*) http://shop.zloradnij.gpm/$1 [R=301,L]
+
+#RewriteEngine On
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI}
+
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . index.php
+
