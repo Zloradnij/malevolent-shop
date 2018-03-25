@@ -12,6 +12,14 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    'modules' => [
+        'user' => [
+            'class' => 'dektrium\user\Module',
+            // ...other configs from here: [Configuration Options](installation/configuration-options.md), e.g.
+            // 'generatePasswords' => true,
+            // 'switchIdentitySessionKey' => 'myown_usuario_admin_user_key',
+        ]
+    ],
     'components' => [
         'cache' => [
             'class' => 'yii\caching\FileCache',
@@ -25,6 +33,9 @@ $config = [
             ],
         ],
         'db' => $db,
+        'authManager'  => [
+            'class' => 'yii\rbac\DbManager',
+        ],
     ],
     'params' => $params,
     /*
