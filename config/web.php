@@ -1,6 +1,20 @@
 <?php
 
 $params = require __DIR__ . '/params.php';
+
+/**
+ * return [
+ *   'class' => 'yii\db\Connection',
+ *   'dsn' => 'mysql:host=localhost;dbname=dbname',
+ *   'username' => 'username',
+ *   'password' => 'password',
+ *   'charset' => 'utf8',
+ *   // Schema cache options (for production environment)
+ *   'enableSchemaCache' => true,
+ *   'schemaCacheDuration' => 10,
+ *   'schemaCache' => 'cache',
+ * ];
+ * */
 $db = require __DIR__ . '/db.php';
 
 $config = [
