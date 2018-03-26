@@ -6,8 +6,8 @@ php_value max_execution_time 100
 php_value max_input_time 100
 
 RewriteCond %{HTTP_HOST} .
-RewriteCond %{HTTP_HOST} !^shop\.zloradnij\.gpm [NC]
-RewriteRule (.*) http://shop.zloradnij.gpm/$1 [R=301,L]
+RewriteCond %{HTTP_HOST} !^shop\.zloradnij\.ru [NC]
+RewriteRule (.*) http://shop.zloradnij.ru/$1 [R=301,L]
 
 #RewriteEngine On
 # RewriteCond %{HTTPS} off
