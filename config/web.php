@@ -44,8 +44,9 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
-    'modules' => [
-        'user' => [
+    'language'   => 'ru-RU',
+    'modules'    => [
+        'user'    => [
             'class' => 'dektrium\user\Module',
             // ...other configs from here: [Configuration Options](installation/configuration-options.md), e.g.
             // 'generatePasswords' => true,
@@ -53,23 +54,26 @@ $config = [
 
             'controllerMap' => [
                 'admin' => [
-                    'class' => 'dektrium\user\controllers\AdminController',
+                    'class'     => 'dektrium\user\controllers\AdminController',
                     'as access' => [
                         'class' => 'yii\filters\AccessControl',
                         'rules' => [
                             [
-                                'allow' => true,
+                                'allow' => TRUE,
                                 'roles' => ['admin'],
                             ],
                             [
                                 'actions' => ['switch'],
-                                'allow' => true,
-                                'roles' => ['@'],
+                                'allow'   => TRUE,
+                                'roles'   => ['@'],
                             ],
                         ],
                     ],
                 ],
             ],
+        ],
+        'control' => [
+            'class' => 'app\modules\control\Module',
         ],
 
     ],
@@ -104,12 +108,29 @@ $config = [
         ],
 
         'urlManager' => [
-            'enablePrettyUrl' => true,
-            'showScriptName' => false,
-            'rules' => [
+            'enablePrettyUrl' => TRUE,
+            'showScriptName'  => FALSE,
+            'rules'           => [
             ],
         ],
-
+        'i18n'       => [
+            'translations' => [
+                /**
+                 * shop название нашего php файла переводов который нужно создать shop.php (может быть любым)
+                 * */
+                'shop*' => [
+                    'class'          => 'yii\i18n\PhpMessageSource',
+                    /**
+                     * путь для нашего файла переводов app/messages/ru/shop.php
+                     * */
+                    'basePath'       => '@app/messages',
+                    /**
+                     * язык с какого переводим, то есть, в проекте все надписи пишем на английском
+                     * */
+                    'sourceLanguage' => 'en-US',
+                ],
+            ],
+        ],
     ],
     'params'     => $params,
 ];
@@ -125,9 +146,9 @@ if (YII_ENV_DEV) {
 
     $config['bootstrap'][] = 'gii';
     $config['modules']['gii'] = [
-        'class' => 'yii\gii\Module',
+        'class'      => 'yii\gii\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['127.0.0.1', '::1', '*'],
     ];
 }
 
