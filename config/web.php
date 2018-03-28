@@ -78,6 +78,9 @@ $config = [
         'shop'    => [
             'class' => 'app\modules\shop\Module',
         ],
+        'catalog' => [
+            'class' => 'app\modules\catalog\Module',
+        ],
     ],
     'components' => [
         'request'      => [
