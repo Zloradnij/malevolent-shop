@@ -37,11 +37,11 @@ class XmlImportController extends Controller
             mkdir($this->imageFolder, 0777, true);
         }
 
-//        if ((new UploadCatalogs($this->catalogFileName))->upload()) {
-//            print "\nstart parse\n";
-//        } else {
-//            print "\nupload error\n";
-//        }
+        if ((new UploadCatalogs($this->catalogFileName))->upload()) {
+            print "\nstart parse\n";
+        } else {
+            print "\nupload error\n";
+        }
 
         $content = simplexml_load_file(\Yii::getAlias('@novicamImport') . $this->catalogFileName);
 
