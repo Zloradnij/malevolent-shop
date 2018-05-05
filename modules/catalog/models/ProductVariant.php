@@ -3,6 +3,8 @@
 namespace app\modules\catalog\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "product_variant".
@@ -22,6 +24,14 @@ class ProductVariant extends \yii\db\ActiveRecord
     const STATUS_ACTIVE = 10;
     const STATUS_DELETE = 0;
 
+    public function behaviors()
+    {
+        return [
+            BlameableBehavior::class,
+            TimestampBehavior::class,
+        ];
+    }
+
     /**
      * @inheritdoc
      */
@@ -37,7 +47,7 @@ class ProductVariant extends \yii\db\ActiveRecord
     {
         return [
             [['title', 'alias', 'status', 'product_id'], 'required'],
-            [['sort', 'product_id', 'status'], 'integer'],
+            [['sort', 'product_id', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['price'], 'number'],
             [['description_short', 'description'], 'string'],
             [['title', 'alias'], 'string', 'max' => 250],
@@ -60,6 +70,11 @@ class ProductVariant extends \yii\db\ActiveRecord
             'price'             => Yii::t('shop', 'Price'),
             'description_short' => Yii::t('shop', 'Description Short'),
             'description'       => Yii::t('shop', 'Description'),
+
+            'created_at'        => Yii::t('shop', 'Created At'),
+            'updated_at'        => Yii::t('shop', 'Updated At'),
+            'created_by'        => Yii::t('shop', 'Created By'),
+            'updated_by'        => Yii::t('shop', 'Updated By'),
         ];
     }
 
@@ -73,6 +88,11 @@ class ProductVariant extends \yii\db\ActiveRecord
     }
 
     public function getProduct()
+    {
+        return $this->hasOne(Product::class, ['id' => 'product_id']);
+    }
+
+    public function getOptions()
     {
         return $this->hasOne(Product::class, ['id' => 'product_id']);
     }

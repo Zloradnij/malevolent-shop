@@ -2,6 +2,8 @@
 
 namespace app\modules\catalog\models\query;
 
+use app\modules\catalog\models\ProductVariant;
+
 /**
  * This is the ActiveQuery class for [[\app\modules\catalog\models\ProductVariant]].
  *
@@ -9,26 +11,21 @@ namespace app\modules\catalog\models\query;
  */
 class ProductVariantQuery extends BaseCatalogQuery
 {
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
-
     /**
-     * @inheritdoc
-     * @return \app\modules\catalog\models\ProductVariant[]|array
+     * @return $this
      */
-    public function all($db = null)
+    public function active()
     {
-        return parent::all($db);
+        return $this->andWhere(['status' => ProductVariant::STATUS_ACTIVE]);
     }
 
     /**
-     * @inheritdoc
-     * @return \app\modules\catalog\models\ProductVariant|array|null
+     * @param $productID
+     *
+     * @return $this
      */
-    public function one($db = null)
+    public function findByProduct($productID)
     {
-        return parent::one($db);
+        return $this->andWhere(['product_id' => $productID]);
     }
 }
