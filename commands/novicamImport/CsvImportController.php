@@ -35,11 +35,11 @@ class CsvImportController extends Controller
             mkdir($this->imageFolder, 0777, true);
         }
 
-//        if ((new UploadCatalogs($this->catalogFileName))->upload()) {
-//            print "\nstart parse\n";
-//        } else {
-//            print "\nupload error\n";
-//        }
+        if ((new UploadCatalogs($this->catalogFileName))->upload()) {
+            print "\nstart parse\n";
+        } else {
+            print "\nupload error\n";
+        }
 
         $pathToFile = \Yii::getAlias('@novicamImport') . $this->catalogFileName;
 
