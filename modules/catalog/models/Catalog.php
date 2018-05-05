@@ -3,6 +3,8 @@
 namespace app\modules\catalog\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "catalog".
@@ -19,6 +21,14 @@ class Catalog extends \yii\db\ActiveRecord
     const STATUS_ACTIVE = 10;
     const STATUS_DELETE = 0;
 
+    public function behaviors()
+    {
+        return [
+            BlameableBehavior::class,
+            TimestampBehavior::class,
+        ];
+    }
+
     /**
      * @inheritdoc
      */
@@ -34,7 +44,7 @@ class Catalog extends \yii\db\ActiveRecord
     {
         return [
             [['title', 'alias', 'status'], 'required'],
-            [['sort', 'status'], 'integer'],
+            [['sort', 'status', 'created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['description'], 'string'],
             [['title', 'alias'], 'string', 'max' => 200],
             ['status', 'in', 'range' => [static::STATUS_ACTIVE, static::STATUS_DELETE]],
@@ -53,6 +63,11 @@ class Catalog extends \yii\db\ActiveRecord
             'sort'        => Yii::t('shop', 'Sort'),
             'status'      => Yii::t('shop', 'Status'),
             'description' => Yii::t('shop', 'Description'),
+
+            'created_at'  => Yii::t('shop', 'Created At'),
+            'updated_at'  => Yii::t('shop', 'Updated At'),
+            'created_by'  => Yii::t('shop', 'Created By'),
+            'updated_by'  => Yii::t('shop', 'Updated By'),
         ];
     }
 

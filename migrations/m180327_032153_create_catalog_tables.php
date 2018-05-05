@@ -25,6 +25,11 @@ class m180327_032153_create_catalog_tables extends Migration
             'sort'        => $this->integer(10)->null()->unsigned(),
             'status'      => $this->tinyInteger(2)->notNull(),
             'description' => $this->text()->null(),
+
+            'created_at'  => $this->integer(11)->null()->unsigned(),
+            'updated_at'  => $this->integer(11)->null()->unsigned(),
+            'created_by'  => $this->integer(11)->null()->unsigned(),
+            'updated_by'  => $this->integer(11)->null()->unsigned(),
         ], $tableOptions);
 
         $this->insert('catalog', [
@@ -33,6 +38,11 @@ class m180327_032153_create_catalog_tables extends Migration
             'sort'        => 100,
             'status'      => 10,
             'description' => 'Каталог, который будет участвовать в продаже',
+
+            'created_at'  => time(),
+            'updated_at'  => time(),
+            'created_by'  => 1,
+            'updated_by'  => 1,
         ]);
 
         $this->createTable('category', [
@@ -40,12 +50,18 @@ class m180327_032153_create_catalog_tables extends Migration
             'catalog_id'        => $this->integer(10)->unsigned(),
             'title'             => $this->string(250)->notNull(),
             'alias'             => $this->string(250)->notNull(),
+            'relation_path'     => $this->string(250)->notNull(),
             'sort'              => $this->integer(10)->null()->unsigned(),
             'parent_id'         => $this->integer(11)->null()->unsigned(),
             'level'             => $this->integer(10)->defaultValue(1)->null()->unsigned(),
             'status'            => $this->tinyInteger(2)->notNull(),
             'description_short' => $this->text()->null(),
             'description'       => $this->text()->null(),
+
+            'created_at'        => $this->integer(11)->null()->unsigned(),
+            'updated_at'        => $this->integer(11)->null()->unsigned(),
+            'created_by'        => $this->integer(11)->null()->unsigned(),
+            'updated_by'        => $this->integer(11)->null()->unsigned(),
         ], $tableOptions);
 
         $this->createIndex('idx-category-catalog_id', 'category', 'catalog_id');
@@ -60,6 +76,12 @@ class m180327_032153_create_catalog_tables extends Migration
             'price'             => $this->float(2)->defaultValue(0),
             'description_short' => $this->text()->null(),
             'description'       => $this->text()->null(),
+            'import_path'       => $this->string(250)->null(),
+
+            'created_at'        => $this->integer(11)->null()->unsigned(),
+            'updated_at'        => $this->integer(11)->null()->unsigned(),
+            'created_by'        => $this->integer(11)->null()->unsigned(),
+            'updated_by'        => $this->integer(11)->null()->unsigned(),
         ], $tableOptions);
 
         $this->createIndex('idx-product-catalog_id', 'product', 'catalog_id');
@@ -74,9 +96,33 @@ class m180327_032153_create_catalog_tables extends Migration
             'price'             => $this->float(2)->defaultValue(0),
             'description_short' => $this->text()->null(),
             'description'       => $this->text()->null(),
+
+            'created_at'        => $this->integer(11)->null()->unsigned(),
+            'updated_at'        => $this->integer(11)->null()->unsigned(),
+            'created_by'        => $this->integer(11)->null()->unsigned(),
+            'updated_by'        => $this->integer(11)->null()->unsigned(),
         ], $tableOptions);
 
         $this->createIndex('idx-product_variant-product_id', 'product_variant', 'product_id');
+
+        $this->createTable('product_options', [
+            'id'                => $this->primaryKey(),
+            'title'             => $this->string(250)->notNull(),
+            'alias'             => $this->string(250)->notNull(),
+            'sort'              => $this->integer(10)->null()->unsigned(),
+            'status'            => $this->tinyInteger(2)->notNull(),
+            'variant_id'        => $this->integer(10)->notNull()->unsigned(),
+            'value'             => $this->string(250)->null(),
+            'description_short' => $this->text()->null(),
+            'description'       => $this->text()->null(),
+
+            'created_at'        => $this->integer(11)->null()->unsigned(),
+            'updated_at'        => $this->integer(11)->null()->unsigned(),
+            'created_by'        => $this->integer(11)->null()->unsigned(),
+            'updated_by'        => $this->integer(11)->null()->unsigned(),
+        ], $tableOptions);
+
+        $this->createIndex('idx-product_options-variant_id', 'product_options', 'variant_id');
 
         $this->createTable('product2category', [
             'id'          => $this->primaryKey(),
@@ -98,6 +144,11 @@ class m180327_032153_create_catalog_tables extends Migration
             'path'        => $this->string(250)->null(),
             'title'       => $this->string(250)->null(),
             'description' => $this->text()->null(),
+
+            'created_at'  => $this->integer(11)->null()->unsigned(),
+            'updated_at'  => $this->integer(11)->null()->unsigned(),
+            'created_by'  => $this->integer(11)->null()->unsigned(),
+            'updated_by'  => $this->integer(11)->null()->unsigned(),
         ], $tableOptions);
 
         $this->createIndex('idx-images-entity_id', 'images', 'entity_id');
@@ -109,14 +160,24 @@ class m180327_032153_create_catalog_tables extends Migration
             'value'       => $this->string(250)->notNull(),
             'description' => $this->text()->null(),
             'status'      => $this->tinyInteger(2)->notNull(),
+
+            'created_at'  => $this->integer(11)->null()->unsigned(),
+            'updated_at'  => $this->integer(11)->null()->unsigned(),
+            'created_by'  => $this->integer(11)->null()->unsigned(),
+            'updated_by'  => $this->integer(11)->null()->unsigned(),
         ], $tableOptions);
 
         $this->insert('catalog_settings', [
             'title'       => 'Продавать варианты товара',
             'alias'       => 'saleVariants',
-            'value'       => '0',
+            'value'       => '1',
             'description' => '',
             'status'      => 10,
+
+            'created_at'  => time(),
+            'updated_at'  => time(),
+            'created_by'  => 1,
+            'updated_by'  => 1,
         ]);
     }
 

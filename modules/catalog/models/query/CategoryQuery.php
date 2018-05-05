@@ -2,6 +2,8 @@
 
 namespace app\modules\catalog\models\query;
 
+use app\modules\catalog\models\Category;
+
 /**
  * This is the ActiveQuery class for [[\app\modules\catalog\models\Category]].
  *
@@ -9,26 +11,31 @@ namespace app\modules\catalog\models\query;
  */
 class CategoryQuery extends BaseCatalogQuery
 {
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
-
     /**
-     * @inheritdoc
-     * @return \app\modules\catalog\models\Category[]|array
+     * @return $this
      */
-    public function all($db = null)
+    public function active()
     {
-        return parent::all($db);
+        return $this->andWhere(['status' => Category::STATUS_ACTIVE]);
     }
 
     /**
-     * @inheritdoc
-     * @return \app\modules\catalog\models\Category|array|null
+     * @param int $level
+     *
+     * @return $this
      */
-    public function one($db = null)
+    public function getByLevel($level)
     {
-        return parent::one($db);
+        return $this->andWhere(['level' => (int)$level]);
+    }
+
+    /**
+     * @param int $parentID
+     *
+     * @return $this
+     */
+    public function getByParent($parentID)
+    {
+        return $this->andWhere(['parent_id' => (int)$parentID]);
     }
 }

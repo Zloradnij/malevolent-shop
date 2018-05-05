@@ -9,26 +9,14 @@ namespace app\modules\catalog\models\query;
  */
 class Product2categoryQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
-
     /**
-     * @inheritdoc
-     * @return \app\modules\catalog\models\Product2category[]|array
+     * @param int $categoryID
+     * @param int $productID
+     *
+     * @return $this
      */
-    public function all($db = null)
+    public function findUnique($categoryID, $productID)
     {
-        return parent::all($db);
-    }
-
-    /**
-     * @inheritdoc
-     * @return \app\modules\catalog\models\Product2category|array|null
-     */
-    public function one($db = null)
-    {
-        return parent::one($db);
+        return $this->andWhere(['category_id' => $categoryID, 'product_id' => $productID]);
     }
 }

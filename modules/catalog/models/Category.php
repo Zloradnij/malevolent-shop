@@ -3,6 +3,8 @@
 namespace app\modules\catalog\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "category".
@@ -11,6 +13,7 @@ use Yii;
  * @property int $catalog_id
  * @property string $title
  * @property string $alias
+ * @property string $relation_path
  * @property int $sort
  * @property int $status
  * @property int $parent_id
@@ -22,6 +25,14 @@ class Category extends \yii\db\ActiveRecord
 {
     const STATUS_ACTIVE = 10;
     const STATUS_DELETE = 0;
+
+    public function behaviors()
+    {
+        return [
+            BlameableBehavior::class,
+            TimestampBehavior::class,
+        ];
+    }
 
     /**
      * @inheritdoc
@@ -38,9 +49,10 @@ class Category extends \yii\db\ActiveRecord
     {
         return [
             [['catalog_id', 'sort', 'status', 'parent_id', 'level'], 'integer'],
+            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
             [['title', 'alias', 'status'], 'required'],
             [['description_short', 'description'], 'string'],
-            [['title', 'alias'], 'string', 'max' => 250],
+            [['title', 'alias', 'relation_path'], 'string', 'max' => 250],
             ['status', 'in', 'range' => [static::STATUS_ACTIVE, static::STATUS_DELETE]],
         ];
     }
@@ -55,12 +67,18 @@ class Category extends \yii\db\ActiveRecord
             'catalog_id'        => Yii::t('shop', 'Catalog ID'),
             'title'             => Yii::t('shop', 'Title'),
             'alias'             => Yii::t('shop', 'Alias'),
+            'relation_path'     => Yii::t('shop', 'Relation Path'),
             'sort'              => Yii::t('shop', 'Sort'),
             'status'            => Yii::t('shop', 'Status'),
             'parent_id'         => Yii::t('shop', 'Parent ID'),
             'level'             => Yii::t('shop', 'Level'),
             'description_short' => Yii::t('shop', 'Description Short'),
             'description'       => Yii::t('shop', 'Description'),
+
+            'created_at'        => Yii::t('shop', 'Created At'),
+            'updated_at'        => Yii::t('shop', 'Updated At'),
+            'created_by'        => Yii::t('shop', 'Created By'),
+            'updated_by'        => Yii::t('shop', 'Updated By'),
         ];
     }
 

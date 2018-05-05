@@ -3,6 +3,8 @@
 namespace app\modules\catalog\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "images".
@@ -19,6 +21,17 @@ use Yii;
  */
 class Images extends \yii\db\ActiveRecord
 {
+    const STATUS_ACTIVE = 10;
+    const STATUS_DELETE = 0;
+
+    public function behaviors()
+    {
+        return [
+            BlameableBehavior::class,
+            TimestampBehavior::class,
+        ];
+    }
+
     /**
      * @inheritdoc
      */
@@ -34,11 +47,9 @@ class Images extends \yii\db\ActiveRecord
     {
         return [
             [['entity', 'entity_id', 'status'], 'required'],
-            [['entity_id', 'sort'], 'integer'],
+            [['entity_id', 'sort', 'created_at', 'updated_at', 'created_by', 'updated_by', 'general', 'status'], 'integer'],
             [['description'], 'string'],
             [['entity'], 'string', 'max' => 50],
-            [['general'], 'string', 'max' => 1],
-            [['status'], 'string', 'max' => 2],
             [['path', 'title'], 'string', 'max' => 250],
         ];
     }
@@ -58,6 +69,11 @@ class Images extends \yii\db\ActiveRecord
             'path'        => Yii::t('shop', 'Path'),
             'title'       => Yii::t('shop', 'Title'),
             'description' => Yii::t('shop', 'Description'),
+
+            'created_at'  => Yii::t('shop', 'Created At'),
+            'updated_at'  => Yii::t('shop', 'Updated At'),
+            'created_by'  => Yii::t('shop', 'Created By'),
+            'updated_by'  => Yii::t('shop', 'Updated By'),
         ];
     }
 

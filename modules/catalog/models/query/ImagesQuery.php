@@ -2,6 +2,8 @@
 
 namespace app\modules\catalog\models\query;
 
+use app\modules\catalog\models\Images;
+
 /**
  * This is the ActiveQuery class for [[\app\modules\catalog\models\Images]].
  *
@@ -9,26 +11,39 @@ namespace app\modules\catalog\models\query;
  */
 class ImagesQuery extends \yii\db\ActiveQuery
 {
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
-
     /**
-     * @inheritdoc
-     * @return \app\modules\catalog\models\Images[]|array
+     * @return $this
      */
-    public function all($db = null)
+    public function active()
     {
-        return parent::all($db);
+        return $this->andWhere(['status' => Images::STATUS_ACTIVE]);
     }
 
     /**
-     * @inheritdoc
-     * @return \app\modules\catalog\models\Images|array|null
+     * @return $this
      */
-    public function one($db = null)
+    public function findByGeneral()
     {
-        return parent::one($db);
+        return $this->andWhere(['general' => 1]);
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return $this
+     */
+    public function findByPath($path)
+    {
+        return $this->andWhere(['path' => $path]);
+    }
+
+    /**
+     * @param int $variantID
+     *
+     * @return $this
+     */
+    public function findByVariant($variantID)
+    {
+        return $this->andWhere(['entity_id' => $variantID])->andWhere(['entity' => 'ProductVariant']);
     }
 }

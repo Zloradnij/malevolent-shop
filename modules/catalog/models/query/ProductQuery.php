@@ -2,6 +2,8 @@
 
 namespace app\modules\catalog\models\query;
 
+use app\modules\catalog\models\Product;
+
 /**
  * This is the ActiveQuery class for [[\app\modules\catalog\models\Product]].
  *
@@ -9,26 +11,31 @@ namespace app\modules\catalog\models\query;
  */
 class ProductQuery extends BaseCatalogQuery
 {
-    /*public function active()
-    {
-        return $this->andWhere('[[status]]=1');
-    }*/
-
     /**
-     * @inheritdoc
-     * @return \app\modules\catalog\models\Product[]|array
+     * @return $this
      */
-    public function all($db = null)
+    public function active()
     {
-        return parent::all($db);
+        return $this->andWhere(['status' => Product::STATUS_ACTIVE]);
     }
 
     /**
-     * @inheritdoc
-     * @return \app\modules\catalog\models\Product|array|null
+     * @param string $importPath
+     *
+     * @return $this
      */
-    public function one($db = null)
+    public function findByImportPath($importPath)
     {
-        return parent::one($db);
+        return $this->andWhere(['import_path' => (string)$importPath]);
+    }
+
+    /**
+     * @param string $categoryID
+     *
+     * @return $this
+     */
+    public function findByCategory($categoryID)
+    {
+        return $this;
     }
 }

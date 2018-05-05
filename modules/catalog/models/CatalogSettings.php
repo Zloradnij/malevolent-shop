@@ -3,6 +3,8 @@
 namespace app\modules\catalog\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "catalog_settings".
@@ -16,6 +18,17 @@ use Yii;
  */
 class CatalogSettings extends \yii\db\ActiveRecord
 {
+    const STATUS_ACTIVE = 10;
+    const STATUS_DELETE = 0;
+
+    public function behaviors()
+    {
+        return [
+            BlameableBehavior::class,
+            TimestampBehavior::class,
+        ];
+    }
+
     /**
      * @inheritdoc
      */
@@ -35,6 +48,7 @@ class CatalogSettings extends \yii\db\ActiveRecord
             [['title', 'value'], 'string', 'max' => 250],
             [['alias'], 'string', 'max' => 100],
             [['status'], 'string', 'max' => 2],
+            [['created_at', 'updated_at', 'created_by', 'updated_by'], 'integer'],
         ];
     }
 
@@ -50,6 +64,11 @@ class CatalogSettings extends \yii\db\ActiveRecord
             'value'       => Yii::t('shop', 'Value'),
             'description' => Yii::t('shop', 'Description'),
             'status'      => Yii::t('shop', 'Status'),
+
+            'created_at'  => Yii::t('shop', 'Created At'),
+            'updated_at'  => Yii::t('shop', 'Updated At'),
+            'created_by'  => Yii::t('shop', 'Created By'),
+            'updated_by'  => Yii::t('shop', 'Updated By'),
         ];
     }
 
