@@ -38,4 +38,22 @@ class ProductQuery extends BaseCatalogQuery
     {
         return $this;
     }
+
+    /**
+     * @return $this
+     */
+    public function withPrice()
+    {
+        return $this->andWhere(['>', 'price', 0]);
+    }
+
+    /**
+     * @param int $id
+     *
+     * @return $this
+     */
+    public function byID($id)
+    {
+        return $this->andWhere(['id' => (int)$id]);
+    }
 }
