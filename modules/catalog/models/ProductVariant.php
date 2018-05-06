@@ -96,4 +96,9 @@ class ProductVariant extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Product::class, ['id' => 'product_id']);
     }
+
+    public function getImages()
+    {
+        return $this->hasMany(Images::class, ['entity_id' => 'id'])->andWhere(['entity' => 'ProductVariant']);
+    }
 }

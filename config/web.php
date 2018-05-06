@@ -1,6 +1,7 @@
 <?php
 
 $params = require __DIR__ . '/params.php';
+$urlRules = require __DIR__ . '/url-manager.php';
 
 /**
  * return [
@@ -115,8 +116,7 @@ $config = [
         'urlManager' => [
             'enablePrettyUrl' => TRUE,
             'showScriptName'  => FALSE,
-            'rules'           => [
-            ],
+            'rules'           => $urlRules,
         ],
         'i18n'       => [
             'translations' => [
@@ -135,6 +135,13 @@ $config = [
                     'sourceLanguage' => 'en-US',
                 ],
             ],
+        ],
+        'formatter' => [
+            'class'                  => 'yii\i18n\Formatter',
+            'locale'                 => 'de_DE',
+            'thousandSeparator'      => ' ',
+            'decimalSeparator'       => ',',
+            'currencyCode'           => '',
         ],
     ],
     'params'     => $params,
