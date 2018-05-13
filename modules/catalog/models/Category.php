@@ -20,6 +20,8 @@ use yii\behaviors\TimestampBehavior;
  * @property int $level
  * @property string $description_short
  * @property string $description
+ *
+ * @property \app\modules\catalog\models\Product[] $products
  */
 class Category extends \yii\db\ActiveRecord
 {
@@ -96,11 +98,17 @@ class Category extends \yii\db\ActiveRecord
         return $this->hasOne(Catalog::class, ['id' => 'catalog_id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getProduct2Category()
     {
         return $this->hasMany(Product2category::class, ['category_id' => 'id']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getProducts()
     {
         return $this
@@ -108,6 +116,20 @@ class Category extends \yii\db\ActiveRecord
             ->via('product2Category');
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getActiveProducts()
+    {
+        return $this
+            ->hasMany(Product::class, ['id' => 'product_id'])
+            ->where(['status' => Product::STATUS_ACTIVE])
+            ->via('product2Category');
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getParent()
     {
         return $this->hasOne(Category::class, ['id' => 'parent_id']);

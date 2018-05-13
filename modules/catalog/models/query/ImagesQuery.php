@@ -46,4 +46,24 @@ class ImagesQuery extends \yii\db\ActiveQuery
     {
         return $this->andWhere(['entity_id' => $variantID])->andWhere(['entity' => 'ProductVariant']);
     }
+
+    /**
+     * @param string $entity
+     *
+     * @return $this
+     */
+    public function findByEntity($entity = 'ProductVariant')
+    {
+        return $this->andWhere(['entity' => $entity]);
+    }
+
+    /**
+     * @param array $entityIDs
+     *
+     * @return $this
+     */
+    public function findByEntityIDs($entityIDs)
+    {
+        return $this->andWhere(['entity_id' => $entityIDs]);
+    }
 }
