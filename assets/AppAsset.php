@@ -26,6 +26,10 @@ class AppAsset extends AssetBundle
     ];
     public $js = [
         '//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js',
+        'js/template.js',
+        'js/product.model.js',
+        'js/shop.model.js',
+        'js/basket.model.js',
         'js/shop.js',
     ];
     public $depends = [

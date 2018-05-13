@@ -1,5 +1,6 @@
 <?php
 
 return [
-    '/shop/products' => '/shop/default/products',
+    '/shop/products' => '/shop/default/product',
+    '/shop/<aliases:[\w_\/-]+>' => '/shop/default/category',
 ];

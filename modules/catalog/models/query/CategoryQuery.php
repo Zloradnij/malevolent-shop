@@ -30,6 +30,16 @@ class CategoryQuery extends BaseCatalogQuery
     }
 
     /**
+     * @param string $alias
+     *
+     * @return $this
+     */
+    public function getByAlias($alias)
+    {
+        return $this->andWhere(['alias' => (string)$alias]);
+    }
+
+    /**
      * @param int $parentID
      *
      * @return $this
@@ -37,5 +47,19 @@ class CategoryQuery extends BaseCatalogQuery
     public function getByParent($parentID)
     {
         return $this->andWhere(['parent_id' => (int)$parentID]);
+    }
+
+    public function asMenu()
+    {
+        return $this
+            ->orderBy(['level' => SORT_DESC])
+            ->indexBy('id')
+            ->select([
+                'id',
+                'title',
+                'alias',
+                'parent_id',
+                'level',
+            ]);
     }
 }
